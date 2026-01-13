@@ -1,0 +1,71 @@
+.output-section {
+  background: var(--card-bg, #1a1a1a);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+  font-size: 1.3rem;
+  margin: 0 0 1rem 0;
+  color: var(--text-color, #fff);
+  border-bottom: 2px solid #333;
+  padding-bottom: 0.5rem;
+}
+
+.sql-output {
+  background: transparent;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  padding: 1.25rem;
+  overflow-x: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #c9d1d9;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.sql-output.executable {
+  border-color: #30363d;
+  background: transparent;
+}
+
+.sql-output .sql-keyword {
+  color: #4a9eff;
+  font-weight: 600;
+}
+
+.sql-output .sql-parameter {
+  color: #ff6b6b;
+  font-weight: 500;
+}
+
+@media (prefers-color-scheme: light) {
+  .output-section {
+    --card-bg: #f9f9f9;
+    --text-color: #213547;
+  }
+
+  .sql-output {
+    background: transparent;
+    border-color: #d0d7de;
+    color: #24292f;
+  }
+
+  .sql-output.executable {
+    border-color: #d0d7de;
+    background: transparent;
+  }
+
+  .sql-output .sql-keyword {
+    color: #0066cc;
+    font-weight: 600;
+  }
+
+  .sql-output .sql-parameter {
+    color: #cc0000;
+    font-weight: 500;
+  }
+}

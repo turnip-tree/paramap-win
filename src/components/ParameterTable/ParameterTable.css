@@ -1,0 +1,133 @@
+.output-section {
+  background: var(--card-bg, #1a1a1a);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+  font-size: 1.3rem;
+  margin: 0 0 1rem 0;
+  color: var(--text-color, #fff);
+  border-bottom: 2px solid #333;
+  padding-bottom: 0.5rem;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.parameter-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #0d1117;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.parameter-table thead {
+  background: #161b22;
+}
+
+.parameter-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #c9d1d9;
+  border-bottom: 2px solid #30363d;
+}
+
+.parameter-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #21262d;
+  color: #c9d1d9;
+}
+
+.parameter-table tbody tr:hover {
+  background: #161b22;
+}
+
+.parameter-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.number-cell {
+  text-align: center;
+  font-weight: 600;
+  color: #646cff;
+  width: 60px;
+}
+
+.context-cell {
+  font-family: 'Courier New', monospace;
+  max-width: 300px;
+}
+
+.context-cell code {
+  background: #21262d;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  color: #79c0ff;
+}
+
+.value-cell {
+  font-family: 'Courier New', monospace;
+}
+
+.value-cell code {
+  background: #21262d;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  color: #a5d6ff;
+}
+
+.type-cell {
+  color: #7ee787;
+  font-weight: 500;
+}
+
+@media (prefers-color-scheme: light) {
+  .output-section {
+    --card-bg: #f9f9f9;
+    --text-color: #213547;
+  }
+
+  .parameter-table {
+    background: #f6f8fa;
+  }
+
+  .parameter-table thead {
+    background: #f6f8fa;
+  }
+
+  .parameter-table th {
+    color: #24292f;
+    border-bottom-color: #d0d7de;
+  }
+
+  .parameter-table td {
+    color: #24292f;
+    border-bottom-color: #d0d7de;
+  }
+
+  .parameter-table tbody tr:hover {
+    background: #f0f0f0;
+  }
+
+  .context-cell code,
+  .value-cell code {
+    background: #e1e4e8;
+  }
+
+  .context-cell code {
+    color: #0969da;
+  }
+
+  .value-cell code {
+    color: #0550ae;
+  }
+
+  .type-cell {
+    color: #1a7f37;
+  }
+}

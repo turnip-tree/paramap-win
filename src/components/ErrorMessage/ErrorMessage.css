@@ -1,0 +1,16 @@
+.error-message {
+  background: #3d1a1a;
+  border: 1px solid #8b2635;
+  border-radius: 8px;
+  padding: 1rem;
+  color: #ff6b6b;
+  text-align: center;
+}
+
+@media (prefers-color-scheme: light) {
+  .error-message {
+    background: #ffebee;
+    border-color: #e57373;
+    color: #c62828;
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "name": "mybatis-sql-log-visualizer",
+  "version": "1.0.0",
+  "description": "MyBatis SQL Log Visualizer - Visualize and debug MyBatis JDBC logs",
+  "author": "MyBatis SQL Log Visualizer",
+  "private": true,
+  "type": "module",
+  "main": "electron-dist/main.js",
+  "scripts": {
+    "dev": "npm run build:electron && concurrently \"npm run dev:vite\" \"npm run dev:electron\"",
+    "dev:vite": "vite --host 0.0.0.0",
+    "dev:electron": "wait-on http://localhost:5173 && electron .",
+    "build": "npm run build:vite && npm run build:electron",
+    "build:vite": "tsc -b && vite build",
+    "build:electron": "tsc -p tsconfig.electron.json && node scripts/copy-preload.js",
+    "preview": "vite preview",
+    "electron": "electron .",
+    "dist": "npm run build && electron-builder",
+    "dist:win": "npm run build && electron-builder --win",
+    "dist:win:portable": "npm run build && electron-builder --win portable",
+    "dist:linux": "npm run build && electron-builder --linux"
+  },
+  "dependencies": {
+    "solid-js": "^1.9.10"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "concurrently": "^9.1.0",
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8",
+    "typescript": "~5.9.3",
+    "vite": "^7.2.4",
+    "vite-plugin-solid": "^2.11.10",
+    "wait-on": "^8.0.1"
+  },
+  "build": {
+    "appId": "com.mybatis.sql.log.visualizer",
+    "productName": "MyBatis SQL Log Visualizer",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron-dist/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "sign": false,
+      "signAndEditExecutable": false,
+      "signDlls": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": ["x64"]
+        }
+      ]
+    }
+  }
+}

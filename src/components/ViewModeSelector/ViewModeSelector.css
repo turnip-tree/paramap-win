@@ -1,0 +1,71 @@
+.view-mode-selector {
+  background: var(--card-bg, #1a1a1a);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.view-mode-selector label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.view-mode-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.view-mode-buttons button {
+  padding: 0.5rem 1.25rem;
+  border: 2px solid #646cff;
+  background: transparent;
+  color: #646cff;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.view-mode-buttons button:hover {
+  background: rgba(100, 108, 255, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(100, 108, 255, 0.2);
+}
+
+.view-mode-buttons button.active {
+  background: linear-gradient(135deg, #646cff 0%, #535bf2 100%);
+  border-color: #646cff;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(100, 108, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+@media (prefers-color-scheme: light) {
+  .view-mode-selector {
+    --card-bg: #f9f9f9;
+    --input-bg: #242424;
+    --text-color: #213547;
+  }
+
+  .view-mode-buttons button {
+    background: transparent;
+    color: #646cff;
+    border-color: #646cff;
+  }
+
+  .view-mode-buttons button:hover {
+    background: rgba(100, 108, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(100, 108, 255, 0.2);
+  }
+
+  .view-mode-buttons button.active {
+    background: linear-gradient(135deg, #646cff 0%, #535bf2 100%);
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(100, 108, 255, 0.5);
+  }
+}
