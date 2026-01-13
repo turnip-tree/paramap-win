@@ -27,7 +27,7 @@ function highlightSQL(sql: string, replacedValues?: Array<{ start: number; end: 
     // Sort by start position in reverse order to avoid position shifts
     const sortedValues = [...replacedValues].sort((a, b) => b.start - a.start);
     
-    sortedValues.forEach((rv, index) => {
+    sortedValues.forEach((rv) => {
       if (rv.start >= 0 && rv.end <= sql.length && rv.start < rv.end) {
         const value = sql.substring(rv.start, rv.end);
         // Verify the value matches (it should)
