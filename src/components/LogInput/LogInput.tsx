@@ -31,7 +31,7 @@ const LogInput = (props: LogInputProps) => {
   return (
     <div class="log-input-section">
       <label for="log-input" class="section-label">
-        SQL Log Input
+        SQL ログを貼り付けてください
       </label>
       <textarea
         id="log-input"
@@ -42,9 +42,6 @@ const LogInput = (props: LogInputProps) => {
         onPaste={handlePaste}
         rows={10}
       />
-      <button class="convert-button" onClick={props.onConvert}>
-        Convert
-      </button>
     </div>
   );
 };

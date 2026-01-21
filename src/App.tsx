@@ -1,27 +1,36 @@
 import { createSignal, Show } from 'solid-js';
-import type { ViewMode } from './types';
+import type { ParserConfig } from './parser';
 import { useMyBatisParser } from './hooks/useMyBatisParser';
 import AppHeader from './components/AppHeader/AppHeader';
 import LogInput from './components/LogInput/LogInput';
 import SQLResults from './components/SQLResults/SQLResults';
 import ErrorMessage from './components/ErrorMessage/ErrorMessage';
+import ParserSettings from './components/ParserSettings';
 import './App.css';
 
 function App() {
   const [logInput, setLogInput] = createSignal('');
-  const [viewMode, setViewMode] = createSignal<ViewMode>('bound');
   
   const {
     parsedResults,
     selectedSQLIndex,
     parseLogs,
     selectSQL,
+    parserConfig,
+    updateConfig,
+    updateParameter,
   } = useMyBatisParser();
 
   const handleConvert = () => {
-    parseLogs(logInput());
-    // Reset view mode to 'bound' (Executable SQL) on each conversion
-    setViewMode('bound');
+    parseLogs(logInput(), parserConfig());
+  };
+
+  const handleConfigChange = (config: ParserConfig) => {
+    updateConfig(config);
+    // 設定変更時にも再パース
+    if (logInput().trim()) {
+      parseLogs(logInput(), config);
+    }
   };
 
   return (
@@ -29,6 +38,10 @@ function App() {
       <AppHeader />
 
       <div class="main-content">
+        <ParserSettings
+          config={parserConfig()}
+          onConfigChange={handleConfigChange}
+        />
         <LogInput
           value={logInput()}
           onInput={setLogInput}
@@ -39,9 +52,8 @@ function App() {
           <SQLResults
             sqlList={parsedResults()}
             selectedIndex={selectedSQLIndex()}
-            viewMode={viewMode()}
             onSelectSQL={selectSQL}
-            onViewModeChange={setViewMode}
+            onParameterChange={updateParameter}
           />
         </Show>
 

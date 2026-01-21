@@ -5,7 +5,7 @@ const AppHeader = () => {
     <header class="app-header">
       <h1>MyBatis SQL Log Visualizer</h1>
       <p class="subtitle">
-        Paste MyBatis JDBC logs to extract and visualize SQL with bound parameters
+        MyBatis JDBC ログを貼り付けて、SQL とパラメーターをマッピングします
       </p>
     </header>
   );

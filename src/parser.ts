@@ -1,9 +1,19 @@
 import type { ParsedSQL, ParsedParameter, ReplacedValue } from './types';
 
+export interface ParserConfig {
+  preparingPrefix: string;
+  parametersPrefix: string;
+}
+
+export const DEFAULT_CONFIG: ParserConfig = {
+  preparingPrefix: 'Preparing:',
+  parametersPrefix: 'Parameters:',
+};
+
 /**
  * Extracts SQL and parameters from MyBatis JDBC logs
  */
-export function parseMyBatisLogs(logText: string): ParsedSQL[] {
+export function parseMyBatisLogs(logText: string, config: ParserConfig = DEFAULT_CONFIG): ParsedSQL[] {
   const results: ParsedSQL[] = [];
   
   // Split by lines and find all Preparing/Parameters pairs
@@ -15,8 +25,9 @@ export function parseMyBatisLogs(logText: string): ParsedSQL[] {
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim();
     
-    // Match "Preparing:" line - flexible pattern
-    const preparingMatch = line.match(/Preparing:\s*(.+)/i);
+    // Match preparing prefix line - flexible pattern
+    const preparingPattern = new RegExp(`${config.preparingPrefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*(.+)`, 'i');
+    const preparingMatch = line.match(preparingPattern);
     if (preparingMatch) {
       // If we have a previous SQL, process it first
       if (currentSQL && currentParams) {
@@ -27,15 +38,19 @@ export function parseMyBatisLogs(logText: string): ParsedSQL[] {
       continue;
     }
     
-    // Match "Parameters:" line - flexible pattern
-    const paramsMatch = line.match(/Parameters:\s*(.+)/i);
+    // Match parameters prefix line - flexible pattern
+    const paramsPattern = new RegExp(`${config.parametersPrefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*(.+)`, 'i');
+    const paramsMatch = line.match(paramsPattern);
     if (paramsMatch) {
       currentParams = paramsMatch[1].trim();
       continue;
     }
     
     // Handle multi-line parameters (continuation lines)
-    if (currentSQL && currentParams !== null && line && !line.match(/^(Preparing|Parameters):/i)) {
+    const preparingEscaped = config.preparingPrefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const parametersEscaped = config.parametersPrefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const continuationPattern = new RegExp(`^(${preparingEscaped}|${parametersEscaped})`, 'i');
+    if (currentSQL && currentParams !== null && line && !line.match(continuationPattern)) {
       // Check if this might be a continuation of parameters
       if (line.includes('(') || line.includes(',')) {
         currentParams += ' ' + line;
@@ -214,6 +229,31 @@ function inferType(value: string): string {
   }
   
   return 'String';
+}
+
+/**
+ * Rebuilds executable SQL from original SQL and updated parameters
+ */
+export function rebuildExecutableSQL(originalSQL: string, parameters: ParsedParameter[]): ParsedSQL {
+  // Clean up SQL - remove extra whitespace but preserve structure
+  const cleanedSQL = originalSQL.replace(/\s+/g, ' ').trim();
+  
+  // Generate executable SQL by replacing placeholders
+  const { sql: executableSQL, replacedValues } = bindParameters(cleanedSQL, parameters);
+  
+  // Format SQL
+  const formattedSQL = formatSQL(executableSQL);
+  const adjustedReplacedValues = adjustReplacedValuePositions(
+    formattedSQL,
+    replacedValues
+  );
+  
+  return {
+    originalSQL: formatSQL(cleanedSQL),
+    executableSQL: formattedSQL,
+    parameters,
+    replacedValues: adjustedReplacedValues
+  };
 }
 
 /**

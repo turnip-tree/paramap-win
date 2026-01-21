@@ -3,6 +3,8 @@ import './ExecutableSQLView.css';
 
 interface ExecutableSQLViewProps {
   sql: ParsedSQL;
+  showParameterTable: boolean;
+  onToggleParameterTable: () => void;
 }
 
 /**
@@ -78,7 +80,14 @@ const ExecutableSQLView = (props: ExecutableSQLViewProps) => {
 
   return (
     <div class="output-section">
-      <h2 class="section-title">Executable SQL (Parameter-Bound)</h2>
+      <button
+        class="parameter-toggle-button"
+        onClick={props.onToggleParameterTable}
+        type="button"
+        title={props.showParameterTable ? 'Parameter Mappingを非表示' : 'Parameter Mappingを表示'}
+      >
+        {props.showParameterTable ? 'Parameter Mapping ▼' : 'Parameter Mapping ▶'}
+      </button>
       <pre class="sql-output executable" innerHTML={highlightedSQL()}></pre>
     </div>
   );

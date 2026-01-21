@@ -3,3 +3,85 @@
   flex-direction: column;
   gap: 1.5rem;
 }
+
+.sql-parameter-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sql-parameter-container.full-width .executable-sql-section {
+  width: 100%;
+}
+
+.sql-parameter-container.side-by-side {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.sql-parameter-container.side-by-side .executable-sql-section {
+  min-width: 0;
+}
+
+.executable-sql-section {
+  width: 100%;
+}
+
+.parameter-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.section-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--card-bg, #1a1a1a);
+  border: 2px solid #333;
+  border-radius: 8px;
+  color: var(--text-color, #fff);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+}
+
+.section-toggle:hover {
+  border-color: #646cff;
+  background: var(--card-bg-hover, #242424);
+}
+
+.toggle-icon {
+  display: inline-block;
+  width: 1rem;
+  text-align: center;
+  font-size: 0.8rem;
+  transition: transform 0.2s;
+}
+
+@media (prefers-color-scheme: light) {
+  .section-toggle {
+    --card-bg: #f9f9f9;
+    --card-bg-hover: #f0f0f0;
+    --text-color: #213547;
+    border-color: #ddd;
+  }
+
+  .section-toggle:hover {
+    border-color: #646cff;
+  }
+}
+
+@media (max-width: 1024px) {
+  .sql-parameter-container.side-by-side {
+    grid-template-columns: 1fr;
+  }
+}

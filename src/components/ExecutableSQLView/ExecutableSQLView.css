@@ -3,6 +3,30 @@
   border-radius: 12px;
   padding: 1.5rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.parameter-toggle-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5rem 1rem;
+  background: var(--card-bg, #1a1a1a);
+  border: 2px solid #333;
+  border-radius: 6px;
+  color: var(--text-color, #fff);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  z-index: 10;
+}
+
+.parameter-toggle-button:hover {
+  border-color: #646cff;
+  background: var(--card-bg-hover, #242424);
 }
 
 .section-title {
@@ -45,7 +69,16 @@
 @media (prefers-color-scheme: light) {
   .output-section {
     --card-bg: #f9f9f9;
+    --card-bg-hover: #f0f0f0;
     --text-color: #213547;
+  }
+
+  .parameter-toggle-button {
+    border-color: #ddd;
+  }
+
+  .parameter-toggle-button:hover {
+    border-color: #646cff;
   }
 
   .sql-output {

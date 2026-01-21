@@ -1,8 +1,6 @@
-import { Show } from 'solid-js';
-import type { ParsedSQL, ViewMode } from '../../types';
-import ViewModeSelector from '../ViewModeSelector/ViewModeSelector';
+import { Show, createSignal } from 'solid-js';
+import type { ParsedSQL } from '../../types';
 import SQLSelector from '../SQLSelector/SQLSelector';
-import ExtractedSQLView from '../ExtractedSQLView/ExtractedSQLView';
 import ExecutableSQLView from '../ExecutableSQLView/ExecutableSQLView';
 import ParameterTable from '../ParameterTable/ParameterTable';
 import './SQLResults.css';
@@ -10,12 +8,13 @@ import './SQLResults.css';
 interface SQLResultsProps {
   sqlList: ParsedSQL[];
   selectedIndex: number;
-  viewMode: ViewMode;
   onSelectSQL: (index: number) => void;
-  onViewModeChange: (mode: ViewMode) => void;
+  onParameterChange?: (sqlIndex: number, paramIndex: number, value: any) => void;
 }
 
 const SQLResults = (props: SQLResultsProps) => {
+  const [showParameterTable, setShowParameterTable] = createSignal(false);
+
   const currentSQL = (): ParsedSQL | null => {
     return props.sqlList[props.selectedIndex] || null;
   };
@@ -30,26 +29,28 @@ const SQLResults = (props: SQLResultsProps) => {
         />
       </Show>
 
-      <ViewModeSelector
-        currentMode={props.viewMode}
-        onModeChange={props.onViewModeChange}
-      />
-
       <Show when={currentSQL()}>
         {(sql) => (
-          <>
-            <Show when={props.viewMode === 'all' || props.viewMode === 'sql'}>
-              <ExtractedSQLView sql={sql()} />
-            </Show>
+          <div class={`sql-parameter-container ${showParameterTable() ? 'side-by-side' : 'full-width'}`}>
+            <div class="executable-sql-section">
+              <ExecutableSQLView
+                sql={sql()}
+                showParameterTable={showParameterTable()}
+                onToggleParameterTable={() => setShowParameterTable(!showParameterTable())}
+              />
+            </div>
 
-            <Show when={props.viewMode === 'all' || props.viewMode === 'bound'}>
-              <ExecutableSQLView sql={sql()} />
+            <Show when={showParameterTable()}>
+              <div class="parameter-section">
+                <ParameterTable
+                  sql={sql()}
+                  onParameterChange={props.onParameterChange ? (paramIndex, value) => {
+                    props.onParameterChange!(props.selectedIndex, paramIndex, value);
+                  } : undefined}
+                />
+              </div>
             </Show>
-
-            <Show when={props.viewMode === 'all' || props.viewMode === 'table'}>
-              <ParameterTable sql={sql()} />
-            </Show>
-          </>
+          </div>
         )}
       </Show>
     </div>

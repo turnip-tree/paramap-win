@@ -1,0 +1,105 @@
+.parser-settings {
+  background: var(--card-bg, #1a1a1a);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.settings-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem;
+  background: transparent;
+  border: none;
+  color: var(--text-color, #fff);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.2s;
+}
+
+.settings-toggle:hover {
+  color: #646cff;
+}
+
+.settings-icon {
+  display: inline-block;
+  width: 1rem;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.settings-content {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #333;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.settings-row:last-child {
+  margin-bottom: 0;
+}
+
+.settings-label {
+  flex-shrink: 0;
+  min-width: 180px;
+  font-size: 0.9rem;
+  color: var(--text-color, #fff);
+}
+
+.settings-input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 2px solid #333;
+  border-radius: 6px;
+  background: var(--input-bg, #242424);
+  color: var(--text-color, #fff);
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
+}
+
+.settings-input:focus {
+  outline: none;
+  border-color: #646cff;
+}
+
+.settings-reset-button {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  background: #444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.settings-reset-button:hover {
+  background: #555;
+}
+
+@media (prefers-color-scheme: light) {
+  .parser-settings {
+    --card-bg: #f9f9f9;
+    --input-bg: #ffffff;
+    --text-color: #213547;
+  }
+
+  .settings-content {
+    border-top-color: #ddd;
+  }
+
+  .settings-input {
+    border-color: #ddd;
+  }
+}
